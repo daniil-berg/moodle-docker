@@ -1,0 +1,20 @@
+services:
+  webserver:
+    environment:
+      VIDEO_API_SECRET: "${VIDEBO_EXTERNAL_API_SECRET:-secure}"
+    ports:
+      # Default web port is set in the compose script.
+      - "${MOODLE_DOCKER_WEB_PORT}:80"
+      # Default videbo storage and distributor ports.
+      - "9020:9020"
+      - "9030:9030"
+
+  videbo:
+    image: "videbo:latest"
+    environment:
+      VIDEBO_EXTERNAL_API_SECRET: "${VIDEBO_EXTERNAL_API_SECRET:-secure}"
+      VIDEBO_LMS__API_URLS: "http://localhost/mod/videoservice/api.php"
+    volumes:
+      - "${VIDEBO_FILES_PATH}:/videbo"
+    network_mode: "service:webserver"
+
