@@ -1,0 +1,10 @@
+services:
+  webserver:
+    environment:
+      VIDEO_API_SECRET: "${VIDEBO_EXTERNAL_API_SECRET:-secure}"
+  videbobehat:
+    image: "videbo:latest"
+    environment:
+      VIDEBO_EXTERNAL_API_SECRET: "${VIDEBO_EXTERNAL_API_SECRET:-secure}"
+      VIDEBO_PUBLIC_BASE_URL: "http://videbobehat:9020"
+

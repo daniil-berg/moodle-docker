@@ -80,6 +80,14 @@ $CFG->behat_profiles = array(
     ),
 );
 $CFG->behat_faildump_path = '/var/www/behatfaildumps';
+$CFG->behat_extraallowedsettings = ['forced_plugin_settings'];
+if (!isset($_SERVER['HTTP_HOST']) || $_SERVER['HTTP_HOST'] == 'webserver') {
+    $videoserver = 'http://videbobehat:9020';
+} else {
+    $videoserver = 'http://localhost:9020';
+}
+$CFG->forced_plugin_settings['videoservice']['video_server_url'] = $videoserver;
+$CFG->forced_plugin_settings['videoservice']['video_api_secret'] = getenv('VIDEO_API_SECRET');
 
 define('PHPUNIT_LONGTEST', true);
 

@@ -1,0 +1,13 @@
+services:
+  synapse:
+    ports:
+      - "8008:8008"
+      # Nginx inside the element container binds to port 80.
+      - "8009:80"
+
+  element:
+    image: "vectorim/element-web"
+    volumes:
+      - "${ELEMENT_CONFIG_PATH}:/app/config.json"
+    network_mode: "service:synapse"
+

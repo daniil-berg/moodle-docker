@@ -1,0 +1,12 @@
+services:
+  synapse:
+    image: "matrixdotorg/synapse:latest"
+    # command: generate
+    environment:
+      SYNAPSE_SERVER_NAME: "${SYNAPSE_SERVER_NAME:-synapse.docker}"
+      SYNAPSE_REPORT_STATS: "${SYNAPSE_REPORT_STATS:-no}"
+    volumes:
+      - "${SYNAPSE_CONFIG_DIR}:/data"
+    ports:
+      - "8008:8008"
+

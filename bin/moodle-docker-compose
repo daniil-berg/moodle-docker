@@ -242,6 +242,32 @@ if [[ "$(uname)" == "Darwin" ]]; then
     dockercompose="${dockercompose} -f ${basedir}/volumes-cached.yml"
 fi
 
+# Videbo
+if [[ ! -z "$VIDEBO_FILES_PATH" ]];
+then
+    dockercompose="${dockercompose} -f ${basedir}/videbo.yml"
+fi
+
+# Videbo for Behat tests
+dockercompose="${dockercompose} -f ${basedir}/videbobehat.yml"
+
+# Synapse
+if [[ ! -z "$SYNAPSE_CONFIG_DIR" ]];
+then
+    dockercompose="${dockercompose} -f ${basedir}/synapse.yml"
+fi
+
+# Element web (depends on synapse container)
+if [[ ! -z "$ELEMENT_CONFIG_PATH" ]];
+then
+    if [[ -z "$SYNAPSE_CONFIG_DIR" ]];
+    then
+        echo 'Error: $SYNAPSE_CONFIG_DIR is not set'
+        exit 1
+    fi
+    dockercompose="${dockercompose} -f ${basedir}/element.yml"
+fi
+
 # Apply local customisations if a local.yml is found.
 # Note: This must be the final modification before the docker-compose command is called.
 localfile="${basedir}/local.yml"
