@@ -13,7 +13,8 @@ services:
     image: "videbo:latest"
     environment:
       VIDEBO_EXTERNAL_API_SECRET: "${VIDEBO_EXTERNAL_API_SECRET:-secure}"
-      VIDEBO_LMS__API_URLS: "http://localhost/mod/videoservice/api.php"
+      VIDEBO_LMS__API_URLS: "http://${MOODLE_DOCKER_WEB_HOST}/mod/videoservice/api.php"
+      VIDEBO_DISTRIBUTOR: 1
     volumes:
       - "${VIDEBO_FILES_PATH}:/videbo"
     network_mode: "service:webserver"
