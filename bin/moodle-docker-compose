@@ -234,14 +234,12 @@ if [[ "$(uname)" == "Darwin" ]]; then
     dockercompose="${dockercompose} -f ${basedir}/volumes-cached.yml"
 fi
 
-# Videbo
-if [[ ! -z "$VIDEBO_FILES_PATH" ]];
+# Videbo (video server + Behat test container). Opt in with MOODLE_DOCKER_VIDEBO=1.
+if [[ -n "$MOODLE_DOCKER_VIDEBO" ]];
 then
     dockercompose="${dockercompose} -f ${basedir}/videbo.yml"
+    dockercompose="${dockercompose} -f ${basedir}/videbobehat.yml"
 fi
-
-# Videbo for Behat tests
-dockercompose="${dockercompose} -f ${basedir}/videbobehat.yml"
 
 # Synapse
 if [[ ! -z "$SYNAPSE_CONFIG_DIR" ]];

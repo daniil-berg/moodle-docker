@@ -3,9 +3,7 @@ services:
     environment:
       VIDEO_API_SECRET: "${VIDEBO_EXTERNAL_API_SECRET:-secure}"
     ports:
-      # Default web port is set in the compose script.
-      - "${MOODLE_DOCKER_WEB_PORT}:80"
-      # Default videbo storage and distributor ports.
+      # Videbo storage and distributor ports (web port comes from webserver.port.yml).
       - "9020:9020"
       - "9030:9030"
 
@@ -16,6 +14,9 @@ services:
       VIDEBO_LMS__API_URLS: "http://${MOODLE_DOCKER_WEB_HOST}/mod/videoservice/api.php"
       VIDEBO_DISTRIBUTOR: 1
     volumes:
-      - "${VIDEBO_FILES_PATH}:/videbo"
+      - "videbo-files:/videbo"
     network_mode: "service:webserver"
+
+volumes:
+  videbo-files:
 
